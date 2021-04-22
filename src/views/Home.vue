@@ -1,51 +1,89 @@
 <template>
   <div id="app">
   <p>
-    Last result: <b>{{ decodedContent }}</b>
+    Seneste resultater: <b>{{ currentQuest }}</b>
   </p>
 
   <p class="error">
-    {{ errorMessage }}
+    
   </p>
 
-  <qrcode-stream @decode="onDecode" @init="onInit"></qrcode-stream>
+  <qrcode-stream @decode="onDecode" @init="onInit" />
 </div>
 </template>
 
 <script>
-export default {
+import { QrcodeStream} from 'vue-qrcode-reader'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
+const db = firebase.firestore();
 
-  data() {
+export default {
+  components: {
+    QrcodeStream,
+  },
+
+  data () {
     return {
-      decodedContent: '',
-      errorMessage: ''
+      currentQuest: '',
+      error: ''
     }
   },
 
   methods: {
-    onDecode(content) {
-      this.decodedContent = content
-    },
-
-    onInit(promise) {
-      promise.then(() => {
-        console.log('Successfully initilized! Ready for scanning now!')
-      })
-        .catch(error => {
-        if (error.name === 'NotAllowedError') {
-          this.errorMessage = 'Hey! I need access to your camera'
-        } else if (error.name === 'NotFoundError') {
-          this.errorMessage = 'Do you even have a camera on your device?'
-        } else if (error.name === 'NotSupportedError') {
-          this.errorMessage = 'Seems like this page is served in non-secure context (HTTPS, localhost or file://)'
-        } else if (error.name === 'NotReadableError') {
-          this.errorMessage = 'Couldn\'t access your camera. Is it already in use?'
-        } else if (error.name === 'OverconstrainedError') {
-          this.errorMessage = 'Constraints don\'t match any installed camera. Did you asked for the front camera although there is none?'
+    openQuiz(code){
+      db.collection('quiz').doc(code).onSnapshot(doc => {
+          if(doc.exists) {
+          console.log('Quizcheck')
+          this.checkCompleted(code)
         } else {
-          this.errorMessage = 'UNKNOWN ERROR: ' + error.message
+          console.log('No match in quiz')
         }
       })
+    },
+    checkCompleted(code){
+        if(!this.userAtt.completed.includes(code)) {
+          console.log('Usercheck')
+          this.currentQuest = code
+          this.$store.commit('currentQuestUpdate', code)
+          this.$router.push('/spoergsmaal');
+        } else {
+          console.log('Already answered')
+        }
+    },
+
+    onDecode (result) {
+      console.log('læser')
+      this.openQuiz(result)
+    },
+
+    async onInit (promise) {
+      try {
+        await promise
+      } catch (error) {
+        if (error.name === 'NotAllowedError') {
+          this.error = "FEJL: Der er ikke givet adgang til kameraet"
+        } else if (error.name === 'NotFoundError') {
+          this.error = "FEJL: Der er ikke et kamera på denne enhed" 
+        } else if (error.name === 'NotSupportedError') {
+          this.error = "ERROR: secure context required (HTTPS, localhost)"
+        } else if (error.name === 'NotReadableError') {
+          this.error = "FEJL: Er kameraet allerede i brug?"
+        } else if (error.name === 'OverconstrainedError') {
+          this.error = "FEJL: Kameraet virker ikke sammen med dette program"
+        } else if (error.name === 'StreamApiNotSupportedError') {
+          this.error = "ERROR: Stream API is not supported in this browser"
+        }
+      }
+    }
+  },
+  computed:{
+    currentUser(){
+      return this.$store.getters.currentUser
+    },
+    userAtt(){
+      return this.$store.getters.userAtt
     }
   }
 }

@@ -1,5 +1,14 @@
 <template>
-    <div>
+    <div class="main">
+        <h1>Sign Up</h1>
+        <v-text-field
+        required
+        label="Navn"
+        v-model="navn"
+        background-color="text"
+        class="formField"
+        placeholder="Navn"
+        solo> </v-text-field>
         <v-text-field
         required
         label="Email"
@@ -16,33 +25,42 @@
         class="formField"
         placeholder="Password"
         solo> </v-text-field>
-        <v-btn
-        color="secondary"
-        @click.prevent="signUp()"
-        >Log In</v-btn>
+        <v-btn dark
+        @click="signUp"
+        >Opret profil</v-btn>
     </div>
 </template>
 
 <script>
-import fb from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/database'
+const db = firebase.firestore();
+
 
 export default {
     data(){
         return{
             email: '',
             password: '',
+            navn: '',
         }
     },
 
     methods:{
- 
         signUp(){
-            fb.auth().createUserWithEmailAndPassword(this.email, this.password)
-                    .then((userCredential) => {
-                // Signed in 
-                var user = userCredential.user;
-                console.log(user)
+            
+            firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(() => {
+
+                db.collection('brugere').doc(this.email).set({
+                    navn: this.navn,
+                    email: this.email,
+                    point:0,
+                    completed: [""]
+                })
+            
+                this.$router.push('/');
+
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -55,7 +73,12 @@ export default {
                 console.log(error)
             });
         }
-    }
+    },
+    
         
 }
 </script>
+
+<style scoped>
+
+</style>
