@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/login">Login</router-link> |
-      <p v-if="userAtt">{{this.timer}}</p>
+      <p>{{this.minutes}}:{{this.seconds}}</p>
       <v-btn
         class="ml-3"
         v-if="currentUser" 
@@ -35,8 +35,12 @@ firebase.auth().onAuthStateChanged(function(user){
 export default {
   data(){
     return{
-      timer: firebase.firestore.Timestamp.now()
+      timer: null,
+      timerStart: 1619272138,
     }
+  },
+  created(){
+    this.countdown()
   },
   methods:{
     signOut(){
@@ -47,6 +51,9 @@ export default {
         console.log(error)
       });
     },
+    countdown(){
+      setInterval(() => this.timer = this.timerStart - firebase.firestore.Timestamp.now().seconds, 1000)
+    },
   },
   computed: {
     currentUser(){
@@ -55,6 +62,16 @@ export default {
     userAtt(){
       return this.$store.getters.userAtt
     },
+    minutes(){
+      var minutes = Math.floor(this.timer / 60)
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      return minutes
+    },
+    seconds(){
+      var seconds = Math.floor(this.timer % 60)
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      return seconds
+    }
   }
 }
 </script>
