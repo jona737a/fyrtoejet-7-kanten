@@ -2,12 +2,14 @@
     <div class="main">
 <!--  DIALOG    -->
         
+      
+        
 <!--  DIALOG    -->
 
-        <v-btn @click="getQuest" v-if="!ready">
+        <v-btn @click="getQuest" v-if="state==1">
             Er de klar til at besvare næste spørgsmål?
         </v-btn>
-        <div class="question" v-if="ready">
+        <div class="question" v-if="state==2">
             <h2>{{question.quest}}</h2>
             <v-btn @click="answer(1)">
                 {{question.answer1}}
@@ -18,6 +20,16 @@
             <v-btn @click="answer(3)">
                 {{question.answer3}}
             </v-btn>
+        </div>
+        <div class="result" v-if="state==3">
+            <div class="right" v-if="result == 'right'">
+                Du svarede rigtigt du har nu {{userAtt.point}} point
+                <v-btn to="/">Åben Kamera</v-btn>
+            </div>
+            <div class="wrong" v-if="result == 'wrong'">
+                Du svarede forkert du har {{userAtt.point}} point
+                <v-btn to="/">Åben Kamera</v-btn>
+            </div>
         </div>
     </div>
 </template>
@@ -31,8 +43,10 @@ export default {
     data(){
         return{
             question: {},
-            ready: false,
+            state: 1,
             basePoint: 2000,
+            dialog: false,
+            result: '',
         }
     },
     methods:{
@@ -45,16 +59,18 @@ export default {
                 point: pointAdd,
                 }, { merge: true });
                 this.$store.commit('currentQuestRemove')
-                this.$router.push('/')
+                this.state = 3
+                this.result = 'right'
             }else{
-                this.$router.push('/')
+                this.state = 3
+                this.result = 'wrong'
             }
         },
         getQuest(){
             db.collection('quiz').doc(this.currentQuest).onSnapshot(doc => {
                 if(doc.exists){
                     this.question = doc.data()
-                    this.ready = true
+                    this.state = 2
                     /*db.collection('brugere').doc(this.userAtt.email).set({
                     completed: completedQuest
                     }, { merge: true });*/

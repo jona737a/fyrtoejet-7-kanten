@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/login">Login</router-link> |
-      <p v-if="userAtt">{{userAtt.point}}|{{userAtt.email}}</p>
+      <p v-if="userAtt">{{this.timer}}</p>
       <v-btn
         class="ml-3"
         v-if="currentUser" 
@@ -35,6 +35,7 @@ firebase.auth().onAuthStateChanged(function(user){
 export default {
   data(){
     return{
+      timer: firebase.firestore.Timestamp.now()
     }
   },
   methods:{
@@ -53,7 +54,7 @@ export default {
     },
     userAtt(){
       return this.$store.getters.userAtt
-    }
+    },
   }
 }
 </script>
