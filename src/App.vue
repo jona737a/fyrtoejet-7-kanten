@@ -1,16 +1,19 @@
 <template>
-  <div id="app">
+  <div id="main">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/" tag="button">Home</router-link> |
       <router-link to="/login">Login</router-link> |
       <p>{{this.minutes}}:{{this.seconds}}</p>
-      <v-btn
-        class="ml-3"
+      <button
+        
         v-if="currentUser" 
-        color="text"
         @click="signOut()">
           Sign Out
-        </v-btn>
+        </button>
+        <button
+        @click="resetTimer()">
+          Reset Timer
+        </button>
     </div>
     <router-view />
   </div>
@@ -54,6 +57,9 @@ export default {
     countdown(){
       setInterval(() => this.timer = this.timerStart - firebase.firestore.Timestamp.now().seconds, 1000)
     },
+    resetTimer(){
+      this.timerStart = firebase.firestore.Timestamp.now().seconds + 1800
+    },
   },
   computed: {
     currentUser(){
@@ -77,12 +83,14 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
+@import 'src/scss/variables.scss';
+#main {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background: linear-gradient(colors(tertiary), colors(white));
+  height: 100vh;
 }
 
 #nav {
@@ -96,5 +104,12 @@ export default {
       color: #42b983;
     }
   }
+}
+button{
+  padding: 4vw;
+  border-radius: 15vw;
+  background-color: colors(primary) !important;
+  width: 60vw;
+  box-shadow: shadow();
 }
 </style>

@@ -1,0 +1,14 @@
+$theme: ( colors:( primary: #E8BB61, secondary: #9C1A21, tertiary:#EDDDB5, error:#A21C28, success:#3FA25E, black: #000000, white: #ffffff, shadow: #00000036), font:());
+@function colors($keys...) {
+    $value: map-get($theme, colors);
+    @each $key in $keys {
+        $value: map-get($value, $key);
+    }
+    @return $value;
+}
+
+;
+@function shadow() {
+    $value: 0px 3px 6px colors(shadow);
+    @return $value;
+}
