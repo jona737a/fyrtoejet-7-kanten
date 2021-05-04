@@ -1,31 +1,36 @@
 <template>
-    <div class="main">
-        <h1>Sign Up</h1>
+    <div>
         <v-text-field
         required
         label="Navn"
         v-model="navn"
-        background-color="text"
         class="formField"
         placeholder="Navn"
         solo> </v-text-field>
+
         <v-text-field
         required
         label="Email"
+        type="email"
         v-model="email"
-        background-color="text"
         class="formField"
         placeholder="Email"
         solo> </v-text-field>
+
         <v-text-field
         required
+        type="password"
         label="Password"
         v-model="password"
-        background-color="text"
         class="formField"
         placeholder="Password"
         solo> </v-text-field>
-        <v-btn dark
+
+        <v-btn 
+        block
+        tile
+        background-color="error"
+        class="loginBtn"
         @click="signUp"
         >Opret profil</v-btn>
     </div>
@@ -79,6 +84,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 
 </style>

@@ -1,19 +1,24 @@
 <template>
   <div id="main">
     <div id="nav">
-      <router-link to="/" tag="button">Home</router-link> |
-      <router-link to="/login">Login</router-link> |
+      <v-btn 
+      rounded
+      to="/" tag="button">Home</v-btn> |
+      <v-btn 
+      rounded
+      to="/login">Login</v-btn>
       <p>{{this.minutes}}:{{this.seconds}}</p>
-      <button
-        
+      <v-btn
+        rounded
         v-if="currentUser" 
         @click="signOut()">
           Sign Out
-        </button>
-        <button
+        </v-btn>
+        <v-btn
+        rounded
         @click="resetTimer()">
           Reset Timer
-        </button>
+        </v-btn>
     </div>
     <router-view />
   </div>

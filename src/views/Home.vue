@@ -1,7 +1,11 @@
 <template>
   <div id="menu">
-    <button @click="$router.push('/kamera')">Kamera</button>
-    <button @click="$router.push('/kort')">Kort</button>
+    <v-btn 
+    rounded
+    to="/kamera">Kamera</v-btn>
+    <v-btn 
+    rounded
+    to="/kort">Kort</v-btn>
   </div>
 </template>
 

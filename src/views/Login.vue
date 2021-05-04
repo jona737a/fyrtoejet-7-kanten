@@ -1,11 +1,16 @@
 <template>
+
     <div class="main">
-        
-        <component v-bind:is="tabStatus"></component>
-            <v-btn
-        dark
+        <v-btn
+        rounded
         @click.prevent="changeTab()"
         >{{btnTxt}}</v-btn>
+        
+        <div class="form">
+            <component v-bind:is="tabStatus"></component>
+        </div>
+        
+            
     </div>
 </template>
 
@@ -42,3 +47,20 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.main{
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    
+}
+
+.form{
+    width: 90vw;
+    background-color: colors(white);
+    padding: 7vw 0;
+    border-radius: 6vw;
+    margin-top: 7vw;
+    box-shadow: shadow();
+}
+</style>

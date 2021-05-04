@@ -1,24 +1,28 @@
 <template>
     <div>
-        <h1>Sign In</h1>
         <v-text-field
         required
         label="Email"
         v-model="email"
-        background-color="text"
         class="formField"
         placeholder="Email"
+        type="email"
         solo> </v-text-field>
+
+
         <v-text-field
         required
+        type="password"
         label="Password"
         v-model="password"
-        background-color="text"
         class="formField"
         placeholder="Password"
         solo> </v-text-field>
+
         <v-btn
-        dark
+        class="loginBtn"
+        tile
+        block
         @click.prevent="signUp()"
         >Log In</v-btn>
     </div>
@@ -57,3 +61,13 @@ export default {
         
 }
 </script>
+
+<style lang="scss">
+.v-text-field{
+    margin: 0 6vw !important;
+}
+.loginBtn{
+    background: colors(error) !important;
+    color: colors(white) !important;
+}
+</style>
