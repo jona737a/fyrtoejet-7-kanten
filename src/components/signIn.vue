@@ -23,13 +23,13 @@
         class="loginBtn"
         tile
         block
-        @click.prevent="signUp()"
+        @click.prevent="signIn()"
         >Log In</v-btn>
     </div>
 </template>
 
 <script>
-//import fb from 'firebase/app'
+import fb from 'firebase/app'
 import 'firebase/auth'
 
 export default {
@@ -41,24 +41,22 @@ export default {
     },
 
     methods:{
- 
-
-        /*signIn(){
+        signIn(){
             fb.auth().signInWithEmailAndPassword(this.email, this.password)
-            .then((userCredential) => {
-                // Signed in
-                var user = userCredential.user;
-                console.log('Login')
+            .then(() => {
+                this.$router.replace('/')
             })
             .catch((error) => {
                 var errorCode = error.code;
                 var errorMessage = error.message;
+                if (errorCode === 'auth/wrong-password'){
+                    alert ("Wrong password")
+                }else{
+                    alert (errorMessage)
+                }
             });
-        },*/
-        
-        
+        },
     }
-        
 }
 </script>
 
@@ -69,5 +67,6 @@ export default {
 .loginBtn{
     background: colors(error) !important;
     color: colors(white) !important;
+    border-radius: 0 !important;
 }
 </style>

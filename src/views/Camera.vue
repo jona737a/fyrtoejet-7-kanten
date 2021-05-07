@@ -1,15 +1,9 @@
 <template>
-  <div id="app">
-  <p>
-    Seneste resultater: <b>{{ currentQuest }}</b>
-  </p>
-
-  <p class="error">
-    
-  </p>
-
-  <qrcode-stream @decode="onDecode" @init="onInit" />
-</div>
+  <div class="kamera">
+    <p class="error"></p>
+    <qrcode-stream @decode="onDecode" @init="onInit" />
+    <img class="kejser" src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Kejser.svg?alt=media&token=e3e281b4-826c-42f2-8320-5e180dede9c7" alt="Kejser">
+  </div>
 </template>
 
 <script>
@@ -26,7 +20,7 @@ export default {
 
   data () {
     return {
-      currentQuest: '',
+      
       error: ''
     }
   },
@@ -45,7 +39,6 @@ export default {
     checkCompleted(code){
         if(!this.userAtt.completed.includes(code)) {
           console.log('Usercheck')
-          this.currentQuest = code
           this.$store.commit('currentQuestUpdate', code)
           this.$router.push('/spoergsmaal');
         } else {
@@ -89,9 +82,28 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+
+.kamera{
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.qrcode-stream-wrapper[data-v-9fc2fd96]{
+  width: 85vw;
+  height: 115vw;
+  border:3px solid colors(white);
+  padding: 4vw;
+  box-sizing: border-box;
+  margin-top: 4vw;
+}
 .error {
   font-weight: bold;
   color: red;
+}
+
+.kejser{
+  width: 70vw;
+  align-self: flex-end;
 }
 </style>

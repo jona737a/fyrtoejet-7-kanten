@@ -1,25 +1,24 @@
 <template>
   <div id="main">
-    <div id="nav">
-      <v-btn 
-      rounded
-      to="/" tag="button">Home</v-btn> |
-      <v-btn 
-      rounded
-      to="/login">Login</v-btn>
+    <div id="nav" v-if="this.currentUser">
+      <router-link to="/"> <v-icon large>mdi-arrow-left-thick</v-icon></router-link>
       <p>{{this.minutes}}:{{this.seconds}}</p>
-      <v-btn
+      
+      
+      <div
         rounded
         v-if="currentUser" 
         @click="signOut()">
-          Sign Out
-        </v-btn>
-        <v-btn
-        rounded
+          Log ud
+        </div>
+
+        
+    </div>
+    <!--<v-btn
+        
         @click="resetTimer()">
           Reset Timer
-        </v-btn>
-    </div>
+    </v-btn>-->
     <router-view />
   </div>
 </template>
@@ -54,7 +53,7 @@ export default {
     signOut(){
       firebase.auth().signOut().then(() => {
         alert('Logged out')
-        this.$router.replace('/')
+        this.$router.replace('/login')
       }).catch(function(error) {
         console.log(error)
       });
@@ -89,10 +88,11 @@ export default {
 
 <style lang="scss">
 @import 'src/scss/variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 #main {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   text-align: center;
   background: linear-gradient(colors(tertiary), colors(white));
   height: 100vh;
@@ -100,20 +100,23 @@ export default {
 
 #nav {
   padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  a{
+    text-decoration: none;
+  }
+  p{
+    position: absolute;
+    left: 44.3vw;
   }
 }
 button{
   padding: 4vw;
-  border-radius: 15vw;
+  border-radius: 15vw !important;
   background-color: colors(primary) !important;
+  text-transform: capitalize !important;
+  font-weight: 600 !important;
   width: 60vw;
   box-shadow: shadow();
 }

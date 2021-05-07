@@ -1,6 +1,8 @@
 <template>
-
     <div class="main">
+        <img class="logo" src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Fyrt%C3%B8jet.svg?alt=media&token=86eb4b7d-315e-4110-ba1d-1cccb22cb332" />
+            
+        
         <v-btn
         rounded
         @click.prevent="changeTab()"
@@ -52,7 +54,6 @@ export default {
     display: flex;
     align-items: center;
     flex-flow: column;
-    
 }
 
 .form{
@@ -62,5 +63,10 @@ export default {
     border-radius: 6vw;
     margin-top: 7vw;
     box-shadow: shadow();
+}
+
+.logo{
+    width: 80vw;
+    margin: 20vw 0 10vw 0;  
 }
 </style>

@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     currentUser: null,
     userAtt: null,
-    currentQuest: '',
+    currentQuest: {},
+
   },
   mutations: {
     userStatus(state, user) {
@@ -32,10 +33,17 @@ export default new Vuex.Store({
       }
     },
     currentQuestUpdate(state,code){
-      state.currentQuest = code
+      
+      db.collection('quiz').doc(code).onSnapshot(doc => {
+        if(doc.exists){
+            state.currentQuest = doc.data()
+        }else{
+            console.log('Fejl ved indlæsning')
+        }
+    })
     },
     currentQuestRemove(state){
-      state.currentQuest = ''
+      state.currentQuest = {}
     }
   },
   actions: {
