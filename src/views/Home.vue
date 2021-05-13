@@ -7,6 +7,9 @@
     <v-btn 
     rounded
     @click="$router.push('/kort')">Kort</v-btn>
+    <v-btn 
+    rounded
+    @click="$router.push('/pointtavle')">Pointtavle</v-btn>
     <div class="illuHome">
       <img src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Soldat.svg?alt=media&token=4e2bf79f-e9b5-4ee9-b23f-eaf95d804a5e" alt="Soldat">
       <img src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Heks.svg?alt=media&token=e9869b7e-ad7f-4c3d-966d-2050730d8ebe" alt="Heks">
@@ -33,6 +36,8 @@ export default {
   justify-content: space-around;
   h3{
     margin-bottom: 10vw;
+    width: 90vw;
+    color: colors(secondary);
   }
   .v-btn{
     font-size: 5vw;

@@ -1,18 +1,13 @@
 <template>
-    <div class="main">
+    <div class="main flame">
         <img class="logo" src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Fyrt%C3%B8jet.svg?alt=media&token=86eb4b7d-315e-4110-ba1d-1cccb22cb332" />
-            
-        
         <v-btn
         rounded
         @click.prevent="changeTab()"
         >{{btnTxt}}</v-btn>
-        
         <div class="form">
             <component v-bind:is="tabStatus"></component>
         </div>
-        
-            
     </div>
 </template>
 
@@ -43,9 +38,6 @@ export default {
             }
         }
     },
-    computed:{
-        
-    }
 }
 </script>
 
@@ -54,6 +46,13 @@ export default {
     display: flex;
     align-items: center;
     flex-flow: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.flame{
+     background-image: url('https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Baggrund.png?alt=media&token=24c47eb3-0ebf-471b-874e-ba310d43ecca');
+    background-size: cover;
 }
 
 .form{

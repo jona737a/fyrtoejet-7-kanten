@@ -29,7 +29,6 @@ export default {
     openQuiz(code){
       db.collection('quiz').doc(code).onSnapshot(doc => {
           if(doc.exists) {
-          console.log('Quizcheck')
           this.checkCompleted(code)
         } else {
           console.log('No match in quiz')
@@ -38,7 +37,6 @@ export default {
     },
     checkCompleted(code){
         if(!this.userAtt.completed.includes(code)) {
-          console.log('Usercheck')
           this.$store.commit('currentQuestUpdate', code)
           this.$router.push('/spoergsmaal');
         } else {
@@ -47,7 +45,6 @@ export default {
     },
 
     onDecode (result) {
-      console.log('læser')
       this.openQuiz(result)
     },
 
@@ -103,7 +100,7 @@ export default {
 }
 
 .kejser{
-  width: 70vw;
+  width: 75vw;
   align-self: flex-end;
 }
 </style>

@@ -7,7 +7,9 @@
             <v-btn @click="getQuest">Ja</v-btn>
         </div>
         <div class="question" v-if="state==2">
-            <div class="billede">Billede</div>
+            <div class="flame"></div>
+            <img :src="question.billede" alt="billede" class="billede">
+            <h4 class="questNumber">Spørgsmål {{question.nr}}/7</h4>
             <div class="answers">
                 <h3>{{question.quest}}</h3>
                 <div class="separator">
@@ -66,14 +68,23 @@ export default {
             state: 1,
             basePoint: 2000,
             result: '',
+            questTimerStart: '',
         }
     },
     methods:{
         answer(answerX){
            if(answerX == this.question.correct){
-                var pointAdd = this.basePoint + this.userAtt.point 
-                var completedQuest = this.userAtt.completed
-                completedQuest.push(this.currentQuest)
+                var timeDif = firebase.firestore.Timestamp.now().seconds - this.questTimerStart
+                var pointCalc
+                if (timeDif >= 0 && timeDif <= 80) {
+                    pointCalc = Math.floor(-20 * timeDif + this.basePoint) 
+                }else if(timeDif >= 80){
+                    pointCalc = 400
+                }else{
+                    pointCalc = 0
+                    console.log('Error')
+                }
+                var pointAdd = pointCalc + this.userAtt.point 
                 db.collection('brugere').doc(this.userAtt.email).set({
                 point: pointAdd,
                 }, { merge: true });
@@ -84,9 +95,11 @@ export default {
         },
         getQuest(){
             this.state = 2
+            this.questTimerStart = firebase.firestore.Timestamp.now().seconds
             /*db.collection('brugere').doc(this.userAtt.email).set({
             completed: completedQuest
             }, { merge: true });*/
+
         },
         questContinue(){
             this.$store.commit('currentQuestRemove')
@@ -109,11 +122,14 @@ export default {
     height: 100vh;
     width: 100vw;
     background-size: 170%;
-    background-position: bottom right;
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Stroke%201%20stor.svg?alt=media&token=98dc6981-9d20-425f-a606-cd41cd808fe1');
+    background-position: 10vw 10vw;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Stor%20stroke%20ny.svg?alt=media&token=7c0a0c9a-1701-4d60-a1ea-d106494513aa');
     background-repeat: no-repeat;
     h1{
         margin-bottom: 10vw;
+    }
+    h3{
+        color: colors(secondary);
     }
     .v-btn{
         margin-top: 10vw;
@@ -124,18 +140,36 @@ export default {
     display: flex;
     flex-flow: column;
     align-items: center;
+    position: relative;
+    z-index: 1;
+    .flame{
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        opacity: 0.3;
+        z-index: 0;
+    }
     .billede{
         width: 80vw;
-        height: 40vw;
         border: 2vw solid colors(white);
         box-shadow: shadow();
+        z-index: inherit;
+    }
+    
+    .questNumber{
+        background-color: #ffffff;
+        margin-top: 10vw;
+        margin-bottom: -4vw;
+        z-index: 2;
+        padding: 2vw 4vw;
+        border-radius: 5vw;
     }
 
     .answers{
         display: flex;
         flex-flow: column;
         align-items: center;
-        margin-top: 10vw;
+        z-index: inherit;
         h3{
             width: 80vw;
             height: 30vw;
@@ -225,6 +259,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 2;
     .resultBox{
         background-color: colors(white);
         height: 100vw;
