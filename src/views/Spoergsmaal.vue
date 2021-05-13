@@ -96,9 +96,10 @@ export default {
         getQuest(){
             this.state = 2
             this.questTimerStart = firebase.firestore.Timestamp.now().seconds
-            /*db.collection('brugere').doc(this.userAtt.email).set({
-            completed: completedQuest
-            }, { merge: true });*/
+            console.log(this.question.id)
+            db.collection('brugere').doc(this.userAtt.email).set({
+            completed: this.question.id
+            }, { merge: true });
 
         },
         questContinue(){
@@ -254,7 +255,7 @@ export default {
     position: absolute;
     top: 0;
     background-color: rgba(0, 0, 0, 0.432);
-    height: 100vh;
+    height: 100%;
     width: 100vw;
     display: flex;
     justify-content: center;
