@@ -1,7 +1,7 @@
 <template>
   <div class="kamera">
     <p class="error"></p>
-    <qrcode-stream @decode="onDecode" @init="onInit" />
+    <qrcode-stream class="live" @decode="onDecode" @init="onInit" />
     <img class="kejser" src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Kejser.svg?alt=media&token=e3e281b4-826c-42f2-8320-5e180dede9c7" alt="Kejser">
   </div>
 </template>
@@ -86,7 +86,7 @@ export default {
   flex-flow: column;
   align-items: center;
 }
-.qrcode-stream-wrapper[data-v-9fc2fd96]{
+.qrcode-stream-wrapper[data-v-9fc2fd96], .live{
   width: 85vw;
   height: 115vw;
   border:3px solid colors(white);

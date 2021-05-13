@@ -96,7 +96,6 @@ export default {
         getQuest(){
             this.state = 2
             this.questTimerStart = firebase.firestore.Timestamp.now().seconds
-            console.log(this.question.id)
             db.collection('brugere').doc(this.userAtt.email).set({
             completed: this.question.id
             }, { merge: true });
