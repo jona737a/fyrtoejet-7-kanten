@@ -57,7 +57,6 @@ export default {
       setInterval(() => this.timer = this.timerStart - firebase.firestore.Timestamp.now().seconds, 1000)
     },
     resetTimer(){
-      //this.timerStart = firebase.firestore.Timestamp.now().seconds + 1800
       db.collection('timer').doc('start').set({
         timerStart: firebase.firestore.Timestamp.now().seconds + 1800
       })
