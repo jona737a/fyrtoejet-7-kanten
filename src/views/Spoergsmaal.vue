@@ -9,7 +9,7 @@
         <div class="question" v-if="state==2">
             <div class="flame"></div>
             <img :src="question.billede" alt="billede" class="billede">
-            <h4 class="questNumber">Spørgsmål {{question.nr}}/7</h4>
+            <h4 class="questNumber">Spørgsmål {{question.nr}}/5</h4>
             <div class="answers">
                 <h3>{{question.quest}}</h3>
                 <div class="separator">
