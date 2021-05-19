@@ -51,21 +51,16 @@ export default {
             navn: '',
         }
     },
-
     methods:{
         signUp(){
-            
             firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(() => {
-
                 db.collection('brugere').doc(this.email).set({
                     navn: this.navn,
                     email: this.email,
                     point:0,
                     completed: [""]
                 })
-            
                 this.$router.push('/');
-
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -78,9 +73,7 @@ export default {
                 console.log(error)
             });
         }
-    },
-    
-        
+    },    
 }
 </script>
 

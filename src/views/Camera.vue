@@ -17,14 +17,11 @@ export default {
   components: {
     QrcodeStream,
   },
-
   data () {
     return {
-      
       error: ''
     }
   },
-
   methods: {
     openQuiz(code){
       db.collection('quiz').doc(code).onSnapshot(doc => {
@@ -43,11 +40,9 @@ export default {
           console.log('Already answered')
         }
     },
-
     onDecode (result) {
       this.openQuiz(result)
     },
-
     async onInit (promise) {
       try {
         await promise

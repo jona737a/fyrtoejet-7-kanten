@@ -63,14 +63,6 @@ export default {
     },
   },
   computed: {
-    currentUser(){
-      return this.$store.getters.currentUser
-    },
-    userAtt(){
-      return this.$store.getters.userAtt
-    },
-        
-       
     minutes(){
       var minutes = Math.floor(this.timer / 60)
       minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -80,7 +72,13 @@ export default {
       var seconds = Math.floor(this.timer % 60)
       seconds = seconds < 10 ? "0" + seconds : seconds;
       return seconds
-    }
+    },
+    currentUser(){
+      return this.$store.getters.currentUser
+    },
+    userAtt(){
+      return this.$store.getters.userAtt
+    },
   }
 }
 </script>
