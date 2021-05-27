@@ -177,9 +177,9 @@ export default {
         z-index: inherit;
         h3{
             width: 80vw;
-            height: 30vw;
+            height: fit-content;
             background-color: #ffffff88;
-            padding-top: 15vw;
+            padding: 10vw;
         }
         .separator{
             display: flex;
@@ -212,6 +212,11 @@ export default {
             justify-content: space-evenly;
             .v-btn__content{
                 white-space: normal;
+                width: 100%;
+            }
+            .v-btn{
+                padding: 10px 5vw;
+                height: fit-content;
             }
         }
     }
@@ -259,7 +264,7 @@ export default {
 }
 
 .result{
-    position: absolute;
+    position: fixed;
     top: 0;
     background-color: rgba(0, 0, 0, 0.432);
     height: 100%;
