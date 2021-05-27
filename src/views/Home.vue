@@ -10,6 +10,7 @@
     <v-btn 
     rounded
     @click="$router.push('/pointtavle')">Pointtavle</v-btn>
+    <h3>Du har svaret på {{this.answered}} ud af {{this.totalQuest}} spørgsmål</h3>
     <div class="illuHome">
       <img src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Soldat.svg?alt=media&token=4e2bf79f-e9b5-4ee9-b23f-eaf95d804a5e" alt="Soldat">
       <img src="https://firebasestorage.googleapis.com/v0/b/fyrtoejet-eb6bc.appspot.com/o/Heks.svg?alt=media&token=e9869b7e-ad7f-4c3d-966d-2050730d8ebe" alt="Heks">
@@ -21,9 +22,21 @@
 export default {
   data () {
     return {
-      
+      answered: 0
     }
   },
+  mounted(){
+      this.answered = this.userAtt.completed.length - 1
+  },
+  computed: {
+    userAtt(){
+      return this.$store.getters.userAtt
+    },
+    totalQuest(){
+      return this.$store.getters.totalQuest
+    },
+  },
+  
 }
 </script>
 

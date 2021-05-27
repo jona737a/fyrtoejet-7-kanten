@@ -11,6 +11,7 @@ import { QrcodeStream} from 'vue-qrcode-reader'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
+
 const db = firebase.firestore();
 
 export default {
@@ -33,7 +34,7 @@ export default {
       })
     },
     checkCompleted(code){
-        if(!this.userAtt.completed.includes(code)) {
+        if(!this.userAtt.completed.includes(code) && this.userAtt.completed.length <= this.totalQuest + 1 && this.currentTime >= 0) {
           this.$store.commit('currentQuestUpdate', code)
           this.$router.push('/spoergsmaal');
         } else {
@@ -69,6 +70,12 @@ export default {
     },
     userAtt(){
       return this.$store.getters.userAtt
+    },
+    totalQuest(){
+      return this.$store.getters.totalQuest
+    },
+    currentTime(){
+      return this.$store.getters.currentTime
     }
   }
 }

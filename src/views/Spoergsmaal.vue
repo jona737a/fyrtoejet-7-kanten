@@ -9,7 +9,7 @@
         <div class="question" v-if="state==2">
             <div class="flame"></div>
             <img :src="question.billede" alt="billede" class="billede">
-            <h4 class="questNumber">Spørgsmål {{question.nr}}/5</h4>
+            <h4 class="questNumber">Spørgsmål {{question.nr}}/{{this.totalQuest}}</h4>
             <div class="answers">
                 <h3>{{question.quest}}</h3>
                 <div class="separator">
@@ -95,9 +95,11 @@ export default {
         },
         getQuest(){
             this.state = 2
+            var newcompleted = this.userAtt.completed
+            newcompleted.push(this.question.id)
             this.questTimerStart = firebase.firestore.Timestamp.now().seconds
             db.collection('brugere').doc(this.userAtt.email).set({
-            completed: this.question.id
+            completed: newcompleted
             }, { merge: true });
 
         },
@@ -112,7 +114,10 @@ export default {
         },
         userAtt(){
             return this.$store.getters.userAtt
-        }
+        },
+        totalQuest(){
+            return this.$store.getters.totalQuest
+        },
     },
 }
 </script>
@@ -205,6 +210,9 @@ export default {
             flex-flow: column;
             align-items: center;
             justify-content: space-evenly;
+            .v-btn__content{
+                white-space: normal;
+            }
         }
     }
 

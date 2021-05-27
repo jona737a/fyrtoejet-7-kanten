@@ -11,7 +11,8 @@ export default new Vuex.Store({
         currentUser: null,
         userAtt: null,
         currentQuest: {},
-
+        totalQuest: 7,
+        timer: 0,
     },
     mutations: {
         userStatus(state, user) {
@@ -40,16 +41,24 @@ export default new Vuex.Store({
         },
         currentQuestRemove(state) {
             state.currentQuest = {}
+        },
+        timerUpdate(state, time) {
+            state.timer = time
         }
     },
     actions: {
         setUser(context, user) {
             context.commit('userStatus', user)
         },
+        setTimer(context, time) {
+            context.commit('timerUpdate', time)
+        }
     },
     getters: {
         currentUser: state => state.currentUser,
         userAtt: state => state.userAtt,
         currentQuest: state => state.currentQuest,
+        totalQuest: state => state.totalQuest,
+        currentTime: state => state.timer,
     }
 })

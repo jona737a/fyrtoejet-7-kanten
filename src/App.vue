@@ -66,12 +66,23 @@ export default {
     minutes(){
       var minutes = Math.floor(this.timer / 60)
       minutes = minutes < 10 ? "0" + minutes : minutes;
+      store.dispatch('setTimer', this.timer)
+      if(this.timer <= 0){
+        minutes = "0" + 0
+        return minutes
+      }else{
       return minutes
+      }
     },
     seconds(){
       var seconds = Math.floor(this.timer % 60)
       seconds = seconds < 10 ? "0" + seconds : seconds;
+      if(this.timer <= 0){
+        seconds = "0" + 0
+        return seconds
+      }else{
       return seconds
+      }
     },
     currentUser(){
       return this.$store.getters.currentUser
@@ -145,4 +156,5 @@ button{
   width: 60vw;
   box-shadow: shadow();
 }
+
 </style>
